@@ -1,0 +1,34 @@
+@import './idlewild.common.scss';
+
+.form-wrapper {
+	max-width: 400px;
+	padding: 25px 0px;
+
+	.form-row {
+		@include flex-parent(stretch, stretch, row);
+		width: 100%;
+
+		& > div { width: auto !important; } // stupid MUI outer div
+
+		.field {
+			margin-right: 16px;
+			font-family: $uiFont !important;
+
+			&:last-of-type {
+				margin-right: 0px;
+			}
+		}
+
+		.field-airline, .field-flight-date {
+			@include flex-child(1,0,100px);
+			max-width: 300px;
+		}
+
+		.field-flight-number {
+			@include flex-child(0,0,80px);
+			max-width: 100px;
+		}
+
+	}
+
+}

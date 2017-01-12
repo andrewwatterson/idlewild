@@ -1,0 +1,32 @@
+$uiFont: 'Work Sans', sans-serif;
+
+$xLight: 100;
+$light: 200;
+$regular: 400;
+$semibold: 500;
+$bold: 600;
+
+$white: #FFFFFF;
+$blueMuted: #32687A;
+$blueDark: #00394D;
+
+$appBackground: $blueDark;
+$appLogoBackground: $blueMuted;
+$appLogoText: $blueDark;
+
+@mixin flex-parent($justify: space-around, $align: stretch, $direction: row) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+	
+	display: -webkit-flex;
+	-webkit-flex-direction: $direction;
+	-webkit-justify-content: $justify;
+	-webkit-align-items: $align;
+}
+
+@mixin flex-child($grow, $shrink, $basis) {
+	flex: $grow $shrink $basis;
+	-webkit-flex: $grow $shrink $basis;
+}

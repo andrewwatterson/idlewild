@@ -1,0 +1,45 @@
+@import './idlewild.common.scss';
+
+body {
+	background-color: $appBackground;
+	margin: 0; padding: 0;
+	font-family: $uiFont;
+	color: $white;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+
+h2 {
+	font-size: 24px;
+	font-weight: $regular;
+}
+
+.idlewild-page {
+	@include flex-parent(flex-start, center, column);
+	padding: 16px;
+	text-align: center;
+}
+
+.title-bar {
+	width: 100%;
+	padding: 20px 0px;
+
+	@include flex-parent();
+
+	.logo-wrapper {
+		display: inline-block;
+		background-color: red;
+		padding: 10px 20px;
+		background-color: $appLogoBackground;
+		margin: 0 auto;
+
+		.logo {
+			height: 9px;
+			width: 98px;
+
+			path {
+				fill: $appLogoText;
+			}
+		}
+	}
+}
