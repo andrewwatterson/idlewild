@@ -1,11 +1,11 @@
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 
 import Airport from './models/Airport';
 import Airline from './models/Airline';
 //import { seedAirports, seedAirlines } from './server/seed/seed';
 
 import iH from '../global/IdlewildHelpers';
-import iS from '../global/idlewild.secrets.js';
+import iS from '../idlewild.secrets.js';
 
 function setupAllRoutes(apiRouter) {
 	setupBaseRoutes(apiRouter);
@@ -120,7 +120,31 @@ function setupAirlineRoutes(apiRouter) {
 function setupFlightDetailRoutes(apiRouter) {
 	apiRouter.route('/flightDetails/:date/:airline/:flight')
 		.get((req, res) => {
+
+			let flightDateArr = req.params.date.split('-');
 			
+			let flightStatsHistoricalEndpoint = 
+					'https://api.flightstats.com/flex/flightstatus/historical/rest/v3/json/' +
+					'flight/status/' +
+					req.params.airline + '/' +
+					req.params.flight + '/' +
+					'dep/' +
+					flightDateArr[0] + '/' +
+					flightDateArr[1] + '/' +
+					flightDateArr[2] +
+					'?appId=' + iS.flightStatsAppID +
+					'&appKey=' + iS.flightStatsKey;
+
+			fetch(flightStatsHistoricalEndpoint).then((response) => {
+				var jsonResponse = response.json().then((json) => {
+
+						res.send(json);
+					});
+
+			}, (error) => {
+				// handle network error
+			});
+
 		});
 }
 

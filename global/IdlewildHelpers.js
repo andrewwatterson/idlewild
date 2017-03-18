@@ -8,6 +8,13 @@ class iH {
 	static months = ['January', 'February', 'March', 'April', 'May', 'June',
 				'July', 'August', 'September', 'October', 'November', 'December'];
 
+	static seatClasses = [
+		{ value: 'Economy', key: 'econ' },
+		{ value: 'Premium Economy', key: 'prem-econ' },
+		{ value: 'Business Class', key: 'business' },
+		{ value: 'First Class', key: 'first' }
+	]
+
 	static regExEscape(str) {
 		return str.replace(/(?=[\/\\^$*+?.()|{}[\]])/g, "\\");
 	}
@@ -46,6 +53,71 @@ class iH {
 		}
 	}
 
+	static getLocalDateString(epochNum, localTz) {
+		let utcDate = Timezone(epochNum);
+
+		let local = Timezone(require('timezone/'+localTz));
+
+		return local(utcDate, "%-d %B %Y" , localTz);
+	}
+
+	static getLocalTimeString(epochNum, localTz) {
+		let utcDate = Timezone(epochNum);
+
+		let local = Timezone(require('timezone/'+localTz));
+
+		return local(utcDate, "%-I:%M %P" , localTz);
+	}
+
+	static getDurationString(time1, time2) {
+		let diff = Math.abs(time2 - time1);
+
+		return Timezone(diff, "%-Hh%M");
+	}
+
+	static parseTime(timeString) {
+
+		let hours, minutes, ampm;
+
+		if(timeString.search(/(am)$/) !== -1) {
+			ampm = "AM";
+		} else if(timeString.search(/(pm)$/) !== -1) {
+			ampm = "PM";
+		}
+
+		let timeParts = timeString.match(/[0-9]+/ig);
+
+		let hourPart, minutePart;
+
+		console.log(ampm, timeParts);
+
+		if(timeParts.length > 1) {
+			hourPart = timeParts[0];
+			minutePart = timeParts[1];		
+		} else if(timeParts.length > 0) {
+			hourPart = timeParts[0].substr(0, timeParts[0].length - 2);
+			minutePart = timeParts[0].substr(-2);
+		}
+
+		if(Number(hourPart) >= 0 && Number(hourPart) <= 24) {
+			hours = hourPart;
+		}
+
+		if(Number(minutePart) >= 0 && Number(minutePart) <= 59) {
+			minutes = minutePart;
+		}
+
+		if(hours && minutes) {
+			return {
+				hours: hours,
+				minutes: minutes,
+				ampm: ampm
+			}
+		} else {
+			return null;
+		}
+	}
+
 	static convertToUTC(year, month, day, hour, minute, ampm, olsonString) {
 
 		let local = Timezone(require('timezone/'+olsonString));
@@ -69,7 +141,7 @@ class iH {
 		{
 			let rawHour = (Number(hour) + 12) % 24;
 			localHour = Leftpad(rawHour, 2, '0');	
-			//console.log(hour,'became',localHour);
+
 		} else {
 			localHour = Leftpad(hour, 2, '0');
 		}

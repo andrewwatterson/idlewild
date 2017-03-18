@@ -14,6 +14,13 @@ h2 {
 	font-weight: $regular;
 }
 
+h4 {
+	color: $yellow;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: .5em;
+}
+
 .idlewild-page {
 	@include flex-parent(flex-start, center, column);
 	padding: 16px;
@@ -42,4 +49,10 @@ h2 {
 			}
 		}
 	}
+}
+
+.chooser-option {
+	width: 100%;
+	padding: 15px 0px;
+	border: 1px solid rgba(255,255,255,.3);
 }

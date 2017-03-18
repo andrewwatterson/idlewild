@@ -1,9 +1,10 @@
 import React from 'react';
 
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 
 import iH from '../../global/IdlewildHelpers';
 import AutoComplete from 'material-ui/AutoComplete';
+
 
 class AirlinesAutoComplete extends React.Component {
 
@@ -75,6 +76,7 @@ class AirlinesAutoComplete extends React.Component {
 	}
 
 	render() {
+
 		return(
 			<AutoComplete
 				name = { this.state.name }
